@@ -1,44 +1,46 @@
 package hexlet.code;
 
-import java.io.File;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
+import java.util.Set;
+import java.util.StringJoiner;
+import java.util.TreeSet;
 
 public class Differ {
-    private static final Logger logger = Logger.getLogger(Differ.class.getName());
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-
-    public static void generate(String filepath1, String filepath2, String format) throws Exception {
+    public static String generate(String filepath1, String filepath2, String format) throws Exception {
         Path firstFile = Paths.get(filepath1).toAbsolutePath().normalize();
         Path secondFile = Paths.get(filepath2).toAbsolutePath().normalize();
 
-        validateFileExists(firstFile, filepath1);
-        validateFileExists(secondFile, filepath2);
+        Map<String, Object> contentFirstFile = Parser.parsing(firstFile, filepath1);
+        Map<String, Object> contentSecondFile = Parser.parsing(secondFile, filepath2);
 
-        try {
-            Map<String, Object> contentFirstFile = readFile(firstFile.toFile());
-            Map<String, Object> contentSecondFile = readFile(secondFile.toFile());
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "File not created", e);
-            throw e;
+        Set<String> allKeys = new TreeSet<>(contentFirstFile.keySet());
+        allKeys.addAll(contentSecondFile.keySet());
+
+        StringJoiner diffJoiner = new StringJoiner("\n", "{\n", "\n}");
+
+        for (var key : allKeys) {
+            Object value1 = contentFirstFile.get(key);
+            Object value2 = contentSecondFile.get(key);
+
+            if (value1 == null && value2 == null) {
+                continue;
+            }
+
+            if (value1 != null && value2 == null) {
+                diffJoiner.add(String.format("  - %s: %s", key, value1));
+            } else if (value1 == null) {
+                diffJoiner.add(String.format("  + %s: %s", key, value2));
+            } else if (value1.equals(value2)) {
+                diffJoiner.add(String.format("    %s: %s", key, value1));
+            }
+            else if (!value1.equals(value2)) {
+                diffJoiner.add(String.format("  - %s: %s", key, value1));
+                diffJoiner.add(String.format("  + %s: %s", key, value2));
+            }
         }
-    }
 
-    private static void validateFileExists(Path absFilePath, String relFilePath) throws Exception {
-        if (!Files.exists(absFilePath)) {
-            throw new Exception("File '" + relFilePath + "' does not exist");
-        }
-    }
-
-    private static Map<String, Object> readFile(File file) throws Exception {
-        return objectMapper.readValue(file, new TypeReference<Map<String, Object>>() {
-        });
+        return diffJoiner.toString();
     }
 }
