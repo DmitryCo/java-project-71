@@ -34,8 +34,7 @@ public class Differ {
                 diffJoiner.add(String.format("  + %s: %s", key, value2));
             } else if (value1.equals(value2)) {
                 diffJoiner.add(String.format("    %s: %s", key, value1));
-            }
-            else if (!value1.equals(value2)) {
+            } else if (!value1.equals(value2)) {
                 diffJoiner.add(String.format("  - %s: %s", key, value1));
                 diffJoiner.add(String.format("  + %s: %s", key, value2));
             }

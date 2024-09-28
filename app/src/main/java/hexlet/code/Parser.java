@@ -6,14 +6,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class Parser {
-    private static final Logger logger = Logger.getLogger(Parser.class.getName());
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public static Map<String, Object> parsing(Path absFilePath, String relFilePath) throws Exception {
         validateFileExists(absFilePath, relFilePath);
@@ -22,7 +22,7 @@ public class Parser {
         try {
             contentFile = readFile(absFilePath.toFile());
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "File not created", e);
+            LOGGER.log(Level.SEVERE, "File not created", e);
             throw e;
         }
         return contentFile;
@@ -35,7 +35,7 @@ public class Parser {
     }
 
     private static Map<String, Object> readFile(File file) throws Exception {
-        return objectMapper.readValue(file, new TypeReference<Map<String, Object>>() {
+        return OBJECT_MAPPER.readValue(file, new TypeReference<Map<String, Object>>() {
         });
     }
 }
