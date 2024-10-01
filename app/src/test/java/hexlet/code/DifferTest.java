@@ -3,10 +3,6 @@ package hexlet.code;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class DifferTest {
     private String file1 = "src/test/resources/fixtures/IdenticalJson1.json";
     private String file2 = "src/test/resources/fixtures/IdenticalJson2.json";
@@ -16,6 +12,14 @@ public class DifferTest {
     private String file6 = "src/test/resources/fixtures/EmptyJson1.json";
     private String file7 = "src/test/resources/fixtures/EmptyJson2.json";
     private String file8 = "src/test/resources/fixtures/DifferentJson1.json";
+    private String file9 = "src/test/resources/fixtures/IdenticalYaml1.yaml";
+    private String file10 = "src/test/resources/fixtures/IdenticalYaml2.yml";
+    private String file11 = "src/test/resources/fixtures/AddedYaml1.yaml";
+    private String file12 = "src/test/resources/fixtures/RemoteYaml1.yaml";
+    private String file13 = "src/test/resources/fixtures/ModifiedYaml1.yaml";
+    private String file14 = "src/test/resources/fixtures/EmptyYaml1.yaml";
+    private String file15 = "src/test/resources/fixtures/EmptyYaml2.yml";
+    private String file16 = "src/test/resources/fixtures/DifferentYaml1.yaml";
 
     @Test
     public void testIdenticalJsonJson() throws Exception {
@@ -77,8 +81,63 @@ public class DifferTest {
         assertEquals(expected, actual);
     }
 
-    private static String readExpectedFile(String pathFile) throws Exception {
-        Path path = Paths.get(pathFile).toAbsolutePath().normalize();
-        return Files.readString(path).trim();
+    @Test
+    public void testIdenticalYamlYml() throws Exception {
+        String format = "stylish";
+        String expected = "{\n    host: hexlet.io\n    timeout: 50\n}";
+        var actual = Differ.generate(file9, file10, format);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testAddedYamlYaml() throws Exception {
+        String format = "stylish";
+        String expected = "{\n  + country: France\n    host: hexlet.io\n    timeout: 50\n}";
+        var actual = Differ.generate(file9, file11, format);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testRemoteYamlYaml() throws Exception {
+        String format = "stylish";
+        String expected = "{\n    host: hexlet.io\n  - timeout: 50\n}";
+        var actual = Differ.generate(file9, file12, format);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testModifiedYamlYaml() throws Exception {
+        String format = "stylish";
+        String expected = "{\n    host: hexlet.io\n  - timeout: 50\n  + timeout: 100\n}";
+        var actual = Differ.generate(file9, file13, format);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testEmptyYamlYaml() throws Exception {
+        String format = "stylish";
+        String expected = "{\n\n}";
+        var actual = Differ.generate(file14, file15, format);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDifferentYamlYaml() throws Exception {
+        String format = "stylish";
+        String expected = "{\n  + currency: $\n  + domain: .com\n  - host: hexlet.io\n  - timeout: 50\n}";
+        var actual = Differ.generate(file9, file16, format);
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
+        assertEquals(expected, actual);
     }
 }
