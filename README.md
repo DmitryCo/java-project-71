@@ -4,5 +4,9 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3a2adf47d317d2e36526/test_coverage)](https://codeclimate.com/github/DmitryCo/java-project-71/test_coverage)
 
 
-
+### App launch examples (asciinema format):
+#### Comparing two JSON documents
 [![asciicast](https://asciinema.org/a/E8scU0beHlzA39fLRkofhgohd.svg)](https://asciinema.org/a/E8scU0beHlzA39fLRkofhgohd)
+
+#### Comparing two YAML documents
+[![asciicast](https://asciinema.org/a/unalewbPknF1FPbEhkjaHNMIy.svg)](https://asciinema.org/a/unalewbPknF1FPbEhkjaHNMIy)
