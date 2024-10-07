@@ -1,41 +1,33 @@
-/*package hexlet.code;
+package hexlet.code;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import java.nio.file.Path;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.Path;
 
-public final class DifferTest {
-
-    private static final Path PATH_TO_FILE_1 = Paths.get("./src/test/resources/fixtures/file1.json")
-            .toAbsolutePath()
-            .normalize();
-    private static final Path PATH_TO_FILE_2 = Paths.get("./src/test/resources/fixtures/file2.json")
-            .toAbsolutePath()
-            .normalize();
-    private static final Path PATH_TO_FILE_3 = Paths.get("./src/test/resources/fixtures/file1.yml")
-            .toAbsolutePath()
-            .normalize();
-    private static final Path PATH_TO_FILE_4 = Paths.get("./src/test/resources/fixtures/file2.yml")
-            .toAbsolutePath()
-            .normalize();
-
-    private static String resultStylish;
-
-    @BeforeEach
-    public void beforeEach() throws Exception {
-        resultStylish = Differ.getData("./src/test/resources/fixtures/result_stylish.txt");
+public class DifferTest {
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"json", "yml"})
-    @DisplayName("Test stylish format")
-    public void testStylishFormat(String format) throws Exception {
-        Path filePath1 = Paths.get("./src/test/resources/fixtures/file1." + format).toAbsolutePath().normalize();
-        Path filePath2 = Paths.get("./src/test/resources/fixtures/file2." + format).toAbsolutePath().normalize();
-        assertThat(Differ.generate(filePath1.toString(), filePath2.toString(), "stylish")).isEqualTo(resultStylish);
+    private static String readFixture(String fileName) throws Exception {
+        var path = getFixturePath(fileName);
+        return Files.readString(path).trim();
     }
-}*/
+
+    private String file1 = "file1.json";
+    private String file2 = "file2.json";
+    private String file3 = "file1.yml";
+    private String file4 = "file2.yml";
+
+    @Test
+    public void testStylishJson() throws Exception {
+        String format = "stylish";
+        String expected = readFixture("ExpectedStylishJsonJson.txt");
+        var actual = Differ.generate(file1, file2, format);
+        assertEquals(expected, actual);
+    }
+}
