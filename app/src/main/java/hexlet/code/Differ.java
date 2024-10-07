@@ -2,44 +2,42 @@ package hexlet.code;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.Map;
-import java.util.Set;
-import java.util.StringJoiner;
-import java.util.TreeSet;
+import java.util.List;
+import java.io.IOException;
+
+
 
 public class Differ {
-    public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        Path firstFile = Paths.get(filepath1).toAbsolutePath().normalize();
-        Path secondFile = Paths.get(filepath2).toAbsolutePath().normalize();
+    public static String generate(String file1, String file2, String formatType) throws IOException {
+        String data1 = getData(file1);
+        String data2 = getData(file2);
 
-        Map<String, Object> contentFirstFile = Parser.parsing(firstFile, filepath1);
-        Map<String, Object> contentSecondFile = Parser.parsing(secondFile, filepath2);
+        Map<String, Object> contentFile1 = Parser.parse(data1, getDataFormat(file1));
+        Map<String, Object> contentFile2 = Parser.parse(data2, getDataFormat(file2));
 
-        Set<String> allKeys = new TreeSet<>(contentFirstFile.keySet());
-        allKeys.addAll(contentSecondFile.keySet());
+        List<Map<String, Object>> diffTree = DiffTreeBuilder.generateDiffTree(contentFile1, contentFile2);
+        return Formatter.format(diffTree, formatType);
+    }
 
-        StringJoiner diffJoiner = new StringJoiner("\n", "{\n", "\n}");
-
-        for (var key : allKeys) {
-            Object value1 = contentFirstFile.get(key);
-            Object value2 = contentSecondFile.get(key);
-
-            if (value1 == null && value2 == null) {
-                continue;
-            }
-
-            if (value1 != null && value2 == null) {
-                diffJoiner.add(String.format("  - %s: %s", key, value1));
-            } else if (value1 == null) {
-                diffJoiner.add(String.format("  + %s: %s", key, value2));
-            } else if (value1.equals(value2)) {
-                diffJoiner.add(String.format("    %s: %s", key, value1));
-            } else if (!value1.equals(value2)) {
-                diffJoiner.add(String.format("  - %s: %s", key, value1));
-                diffJoiner.add(String.format("  + %s: %s", key, value2));
-            }
+    public static void validateFileExists(Path filePath) throws IOException {
+        if (!Files.exists(filePath)) {
+            throw new IOException("File '" + filePath + "' does not exist");
         }
+    }
 
-        return diffJoiner.toString();
+    public static String getData(String file) throws IOException {
+        Path filePath = Paths.get(file).toAbsolutePath().normalize();
+        validateFileExists(filePath);
+        return Files.readString(filePath);
+    }
+
+    public static String getDataFormat(String filePath) {
+        int indexOfFileExtension = filePath.lastIndexOf(".");
+        if (indexOfFileExtension == -1 || indexOfFileExtension == filePath.length() - 1) {
+            throw new IllegalArgumentException("File '" + filePath + "' does not have a valid format");
+        }
+        return filePath.substring(indexOfFileExtension + 1);
     }
 }
