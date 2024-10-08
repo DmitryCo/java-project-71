@@ -1,3 +1,4 @@
+---
 setting1: Some value
 setting2: 200
 setting3: true
@@ -13,7 +14,7 @@ numbers2:
   - 4
   - 5
 id: 45
-default: null
+default:
 checked: false
 numbers3:
   - 3
