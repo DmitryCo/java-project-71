@@ -14,6 +14,7 @@ import java.nio.file.Path;
 public class DifferTest {
     private static String expectedJSON;
     private static String expectedStylish;
+    private static String expectedPlain;
     private static String file1JSON;
     private static String file2JSON;
     private static String file1YAML;
@@ -23,6 +24,7 @@ public class DifferTest {
     public static void beforeAll() throws Exception {
         expectedJSON = readFixture("expectedJSON.json");
         expectedStylish = readFixture("expectedStylish.txt");
+        expectedPlain = readFixture("expectedPlain.txt");
         file1JSON = getPath("file1.json");
         file2JSON = getPath("file2.json");
         file1YAML = getPath("file1.yml");
@@ -45,6 +47,16 @@ public class DifferTest {
     @Test
     public void testStylishYAML() throws Exception {
         assertEquals(expectedStylish, Differ.generate(file1YAML, file2YAML, "stylish"));
+    }
+
+    @Test
+    public void testPlainJSON() throws Exception {
+        assertEquals(expectedPlain, Differ.generate(file1JSON, file2JSON, "plain"));
+    }
+
+    @Test
+    public void testPlainYAML() throws Exception {
+        assertEquals(expectedPlain, Differ.generate(file1YAML, file2YAML, "plain"));
     }
 
     @Test
