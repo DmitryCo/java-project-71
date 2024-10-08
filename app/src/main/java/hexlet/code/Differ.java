@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.List;
 import java.io.IOException;
 
-
-
 public class Differ {
     public static String generate(String file1, String file2, String formatType) throws IOException {
         String data1 = getData(file1);

@@ -2,6 +2,7 @@ package hexlet.code;
 
 import hexlet.code.formatters.StylishFormatter;
 import hexlet.code.formatters.PlainFormatter;
+import hexlet.code.formatters.JsonFormatter;
 
 import java.util.Map;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Formatter {
         return switch (formatType) {
             case "stylish" -> StylishFormatter.stylishFormat(diffTree);
             case "plain" -> PlainFormatter.plainFormat(diffTree);
+            case "json" -> JsonFormatter.jsonFormat(diffTree);
             default -> throw new IllegalArgumentException("Unsupported format type: " + formatType);
         };
     }
