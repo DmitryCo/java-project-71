@@ -40,4 +40,8 @@ public class Differ {
         }
         return filePath.substring(indexOfFileExtension + 1);
     }
+
+    public static String generate(String file1, String file2) throws IOException {
+        return generate(file1, file2, "stylish");
+    }
 }
