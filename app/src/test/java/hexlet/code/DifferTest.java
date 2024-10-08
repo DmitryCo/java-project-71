@@ -6,11 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
-
-
 public class DifferTest {
     private static String expectedJSON;
     private static String expectedStylish;
@@ -22,13 +17,13 @@ public class DifferTest {
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        expectedJSON = readFixture("expectedJSON.json");
-        expectedStylish = readFixture("expectedStylish.txt");
-        expectedPlain = readFixture("expectedPlain.txt");
-        file1JSON = getPath("file1.json");
-        file2JSON = getPath("file2.json");
-        file1YAML = getPath("file1.yml");
-        file2YAML = getPath("file2.yml");
+        expectedJSON = Utils.readFixture("expectedJSON.json");
+        expectedStylish = Utils.readFixture("expectedStylish.txt");
+        expectedPlain = Utils.readFixture("expectedPlain.txt");
+        file1JSON = Utils.getPath("file1.json");
+        file2JSON = Utils.getPath("file2.json");
+        file1YAML = Utils.getPath("file1.yml");
+        file2YAML = Utils.getPath("file2.yml");
     }
 
     @Test
@@ -60,22 +55,18 @@ public class DifferTest {
     }
 
     @Test
+    public void testJsonJSON() throws Exception {
+        assertEquals(expectedJSON, Differ.generate(file1JSON, file2JSON, "json"));
+    }
+
+    @Test
+    public void testJsonYAML() throws Exception {
+        assertEquals(expectedJSON, Differ.generate(file1YAML, file2YAML, "json"));
+    }
+
+    @Test
     public void testDefaultFormat() throws Exception {
         assertEquals(expectedStylish, Differ.generate(file1JSON, file2JSON));
         assertEquals(expectedStylish, Differ.generate(file1YAML, file2YAML));
-    }
-
-    private static Path getFixturePath(String fileName) {
-        return Paths.get("src", "test", "resources", "fixtures", fileName)
-                .toAbsolutePath().normalize();
-    }
-
-    private static String readFixture(String fileName) throws Exception {
-        var path = getFixturePath(fileName);
-        return Files.readString(path).trim();
-    }
-
-    public static String getPath(String fileName) {
-        return String.format("src/test/resources/fixtures/%s", fileName);
     }
 }
