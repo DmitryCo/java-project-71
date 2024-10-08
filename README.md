@@ -10,3 +10,6 @@
 
 #### Comparing two YAML documents
 [![asciicast](https://asciinema.org/a/unalewbPknF1FPbEhkjaHNMIy.svg)](https://asciinema.org/a/unalewbPknF1FPbEhkjaHNMIy)
+
+#### Comparing two JSON and YAML documents with nested structure
+[![asciicast](https://asciinema.org/a/FuOJud4KANHWJGQYVke6KYwRe.svg)](https://asciinema.org/a/FuOJud4KANHWJGQYVke6KYwRe)
