@@ -13,3 +13,6 @@
 
 #### Comparing two JSON and YAML documents with nested structure
 [![asciicast](https://asciinema.org/a/FuOJud4KANHWJGQYVke6KYwRe.svg)](https://asciinema.org/a/FuOJud4KANHWJGQYVke6KYwRe)
+
+#### Comparing two JSON and YAML documents with a plain format
+[![asciicast](https://asciinema.org/a/3Hxx5Xz6p3Al7b79LRTQQBEOZ.svg)](https://asciinema.org/a/3Hxx5Xz6p3Al7b79LRTQQBEOZ)
