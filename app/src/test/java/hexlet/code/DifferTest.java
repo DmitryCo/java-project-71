@@ -2,11 +2,11 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeAll;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 
-public class DifferTest {
+public final class DifferTest {
     private static String expectedJSON;
     private static String expectedStylish;
     private static String expectedPlain;
