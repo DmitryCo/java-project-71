@@ -17,13 +17,13 @@ public final class DifferTest {
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        expectedJSON = Utils.readFixture("expectedJSON.json");
-        expectedStylish = Utils.readFixture("expectedStylish.txt");
-        expectedPlain = Utils.readFixture("expectedPlain.txt");
-        file1JSON = Utils.getPath("file1.json");
-        file2JSON = Utils.getPath("file2.json");
-        file1YAML = Utils.getPath("file1.yml");
-        file2YAML = Utils.getPath("file2.yml");
+        expectedJSON = TestUtils.readFixture("expectedJSON.json");
+        expectedStylish = TestUtils.readFixture("expectedStylish.txt");
+        expectedPlain = TestUtils.readFixture("expectedPlain.txt");
+        file1JSON = TestUtils.getPath("file1.json");
+        file2JSON = TestUtils.getPath("file2.json");
+        file1YAML = TestUtils.getPath("file1.yml");
+        file2YAML = TestUtils.getPath("file2.yml");
     }
 
     @Test
@@ -56,12 +56,18 @@ public final class DifferTest {
 
     @Test
     public void testJsonJSON() throws Exception {
-        assertEquals(expectedJSON, Differ.generate(file1JSON, file2JSON, "json"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode expected = objectMapper.readTree(expectedJSON);
+        JsonNode actual = objectMapper.readTree(Differ.generate(file1JSON, file2JSON, "json"));
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testJsonYAML() throws Exception {
-        assertEquals(expectedJSON, Differ.generate(file1YAML, file2YAML, "json"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode expected = objectMapper.readTree(expectedJSON);
+        JsonNode actual = objectMapper.readTree(Differ.generate(file1YAML, file2YAML, "json"));
+        assertEquals(expected, actual);
     }
 
     @Test

@@ -15,33 +15,33 @@ public class StylishFormatter {
                     result.append("  - ")
                             .append(diff.get("key"))
                             .append(": ")
-                            .append(diff.get("oldValue"))
+                            .append(diff.get("value1"))
                             .append("\n");
                     break;
                 case ADDED:
                     result.append("  + ")
                             .append(diff.get("key"))
                             .append(": ")
-                            .append(diff.get("newValue"))
+                            .append(diff.get("value2"))
                             .append("\n");
                     break;
                 case UNCHANGED:
                     result.append("    ")
                             .append(diff.get("key"))
                             .append(": ")
-                            .append(diff.get("oldValue"))
+                            .append(diff.get("value1"))
                             .append("\n");
                     break;
                 case CHANGED:
                     result.append("  - ")
                             .append(diff.get("key"))
                             .append(": ")
-                            .append(diff.get("oldValue"))
+                            .append(diff.get("value1"))
                             .append("\n");
                     result.append("  + ")
                             .append(diff.get("key"))
                             .append(": ")
-                            .append(diff.get("newValue"))
+                            .append(diff.get("value2"))
                             .append("\n");
                     break;
                 default:

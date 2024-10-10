@@ -21,7 +21,7 @@ public class PlainFormatter {
                     result.append("Property '")
                             .append(diff.get("key"))
                             .append("' was added with value: ")
-                            .append(checkValue(diff.get("newValue")))
+                            .append(checkValue(diff.get("value2")))
                             .append("\n");
                     break;
                 case UNCHANGED:
@@ -30,9 +30,9 @@ public class PlainFormatter {
                     result.append("Property '")
                             .append(diff.get("key"))
                             .append("' was updated. From ")
-                            .append(checkValue(diff.get("oldValue")))
+                            .append(checkValue(diff.get("value1")))
                             .append(" to ")
-                            .append(checkValue(diff.get("newValue")))
+                            .append(checkValue(diff.get("value2")))
                         .append("\n");
                     break;
                 default:

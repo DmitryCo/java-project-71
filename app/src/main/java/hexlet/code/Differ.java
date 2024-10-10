@@ -19,15 +19,8 @@ public class Differ {
         return Formatter.format(diffTree, formatType);
     }
 
-    public static void validateFileExists(Path filePath) throws IOException {
-        if (!Files.exists(filePath)) {
-            throw new IOException("File '" + filePath + "' does not exist");
-        }
-    }
-
     public static String getData(String file) throws IOException {
         Path filePath = Paths.get(file).toAbsolutePath().normalize();
-        validateFileExists(filePath);
         return Files.readString(filePath);
     }
 

@@ -27,18 +27,18 @@ public class DiffTreeBuilder {
         Map<String, Object> diffEntry = new LinkedHashMap<>();
         diffEntry.put("key", key);
 
-        if (contentFile1.containsKey(key) && !contentFile2.containsKey(key)) {
-            diffEntry.put("oldValue", contentFile1.get(key));
+        if (!contentFile2.containsKey(key)) {
+            diffEntry.put("value1", contentFile1.get(key));
             diffEntry.put("changeType", ChangeType.REMOVED);
-        } else if (!contentFile1.containsKey(key) && contentFile2.containsKey(key)) {
-            diffEntry.put("newValue", contentFile2.get(key));
+        } else if (!contentFile1.containsKey(key)) {
+            diffEntry.put("value2", contentFile2.get(key));
             diffEntry.put("changeType", ChangeType.ADDED);
         } else if (Objects.equals(contentFile1.get(key), contentFile2.get(key))) {
-            diffEntry.put("oldValue", contentFile1.get(key));
+            diffEntry.put("value1", contentFile1.get(key));
             diffEntry.put("changeType", ChangeType.UNCHANGED);
         } else if (!Objects.equals(contentFile1.get(key), contentFile2.get(key))) {
-            diffEntry.put("oldValue", contentFile1.get(key));
-            diffEntry.put("newValue", contentFile2.get(key));
+            diffEntry.put("value1", contentFile1.get(key));
+            diffEntry.put("value2", contentFile2.get(key));
             diffEntry.put("changeType", ChangeType.CHANGED);
         } else {
             throw new RuntimeException("Unknown key type: " + key);

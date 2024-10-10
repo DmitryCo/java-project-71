@@ -20,11 +20,7 @@ public class Parser {
             default:
                 throw new IllegalArgumentException("Unsupported format type: " + formatType);
         }
-        try {
-            return objectMapper.readValue(data, new TypeReference<Map<String, Object>>() {
-            });
-        } catch (IOException e) {
-            throw new IOException("Failed to parse " + formatType + " data: " + e.getMessage(), e);
-        }
+        return objectMapper.readValue(data, new TypeReference<Map<String, Object>>() {
+        });
     }
 }
