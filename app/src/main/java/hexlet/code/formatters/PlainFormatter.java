@@ -33,7 +33,7 @@ public class PlainFormatter {
                             .append(checkValue(diff.get("value1")))
                             .append(" to ")
                             .append(checkValue(diff.get("value2")))
-                        .append("\n");
+                            .append("\n");
                     break;
                 default:
                     throw new RuntimeException("Unknown difference tree type: " + diffTree);

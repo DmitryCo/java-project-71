@@ -10,6 +10,7 @@ import java.io.IOException;
 public class Parser {
     public static Map<String, Object> parse(String data, String formatType) throws IOException {
         ObjectMapper objectMapper;
+        formatType = formatType.toLowerCase();
         switch (formatType) {
             case "json":
                 objectMapper = new ObjectMapper();
